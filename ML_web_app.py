@@ -4,8 +4,9 @@ import pickle
 import io
 # from rdkit import Chem
 # from rdkit.Chem import Draw
+#from sklearn.ensemble import GradientBoostingRegressor
 # import xgboost
-# from xgboost import XGBRegressorS
+# from xgboost import XGBRegressor
 from PIL import Image
 
 def main():
@@ -23,6 +24,9 @@ def main():
     st.sidebar.image(img)
 
 def show_model1_page():
+
+
+
     html_temp = """
     <div style="background-color:lightskyblue;padding:10px">
         <h1 style="color:black;text-align:center;">Prediction of Edbile Part PFAS Uptake</h1>
@@ -89,7 +93,7 @@ def show_model1_page():
         with col2:
             OC = st.number_input(' "OC" value', min_value=0.005, max_value=6.34, value=1.32, step=0.1)
         with col3:
-            pH = st.number_input(' "pH" value', min_value=5.195, max_value=8.675, value=7.06, step=0.1)
+            pH = st.number_input(' "pH" value', min_value=6.1, max_value=8.26, value=7.06, step=0.1)
 
         col4, col5, col6 = st.columns(3)
         with col4:
@@ -98,11 +102,11 @@ def show_model1_page():
         with col5:
             time = st.number_input(' "Exposure time" value', min_value=30.0, max_value=224.0, value=60.0, step=1.0)
         with col6:
-            Elipid = st.number_input(' "E-lipid" value', min_value=0.0, max_value=19.14, value=6.45, step=0.1)
+            Elipid = st.number_input(' "E-lipid" value', min_value=2.14, max_value=12.3, value=6.45, step=0.1)
 
         col7, col8, col9 = st.columns(3)
         with col7:
-            Rprotein = st.number_input(' "R-protein" value', min_value=0.0, max_value=10.85, value=4.85, step=0.1)
+            Rprotein = st.number_input(' "R-protein" value', min_value=0.32, max_value=8.23, value=4.85, step=0.1)
         with col8:
             Eprotein = st.number_input(' "E-protein" value', min_value=1.84, max_value=30.0, value=18.3, step=0.1)
         with col9:
@@ -114,31 +118,43 @@ def show_model1_page():
         ECF = 10 ** logECF
         ECF = str(round(ECF, 2))
         # 居中显示按钮
-        st.markdown(
-            f'<p style="font-size: 30px;text-align: center">Prediction ECF result</p>',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'<p style="text-align: center; font-size: 30px;">{ECF}</p>',
-            unsafe_allow_html=True
-        )
+        col1, col2, col3 = st.columns(3)
+        with col2:
+            if st.button("Prediction ECF"):
+                st.success(ECF)
+
         ECF = float(ECF)
         if 0.076 <= ECF <= 88.1:
+
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image( Image.open('good.png'))
+
             st.markdown(
                 f'<p style="font-size: 30px;text-align:center ">good</p>',
                 unsafe_allow_html=True
             )
 
         elif 0.013 < ECF < 0.076 or 88.11 < ECF < 513.79:
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image( Image.open('moderate.png'))
             st.markdown(
                 f'<p style="font-size: 30px;text-align: center">moderate</p>',
                 unsafe_allow_html=True
             )
         else:
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image(Image.open('bad.png'))
             st.markdown(
                 f'<p style="font-size: 30px;text-align: center">bad</p>',
                 unsafe_allow_html=True
             )
+
+
+
+
 
 def show_model2_page():
     html_temp = """
@@ -176,10 +192,10 @@ def show_model2_page():
 
         # mol = Chem.MolFromSmiles(SMILES)
         # img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
-        # # 将图像转换为字节流
+        # 将图像转换为字节流
         # streamlit_image = io.BytesIO()
         # img.save(streamlit_image, format='PNG')
-        # # 在界面上显示图像
+        # 在界面上显示图像
         # st.image(streamlit_image)
 
         des = df.loc[SMILES]
@@ -212,7 +228,7 @@ def show_model2_page():
             else:
                 mode = 1
         with col2:
-            OC = st.number_input(' "OC" value', min_value=0.0, max_value=3.04, value=1.32, step=0.1)
+            OC = st.number_input(' "OC" value', min_value=0.41, max_value=2.58, value=1.32, step=0.1)
         with col3:
             pH = st.number_input(' "pH" value', min_value=5.17, max_value=8.54, value=7.59, step=0.1)
 
@@ -248,17 +264,26 @@ def show_model2_page():
         )
         ECF = float(ECF)
         if 0.013<=ECF<=97:
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image(Image.open('good.png'))
             st.markdown(
                 f'<p style="font-size: 30px;text-align:center ">good</p>',
                 unsafe_allow_html=True
             )
 
         elif 0.0005<ECF<0.013 or 97<ECF<2763:
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image(Image.open('moderate.png'))
             st.markdown(
-                f'<p style="font-size: 30px;text-align: center">moderatee</p>',
+                f'<p style="font-size: 30px;text-align: center">moderate</p>',
                 unsafe_allow_html=True
             )
         else:
+            colA, colB, colC = st.columns(3)
+            with colB:
+                st.image(Image.open('bad.png'))
             st.markdown(
                 f'<p style="font-size: 30px;text-align: center">bad</p>',
                 unsafe_allow_html=True
@@ -298,10 +323,10 @@ def show_model3_page():
 
     # mol = Chem.MolFromSmiles(SMILES)
     # img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
-    # # 将图像转换为字节流
+    # 将图像转换为字节流
     # streamlit_image = io.BytesIO()
     # img.save(streamlit_image, format='PNG')
-    # # 在界面上显示图像
+    # 在界面上显示图像
     # st.image(streamlit_image)
     des = df.loc[SMILES]
 
@@ -389,17 +414,26 @@ def show_model3_page():
     )
     RCF = float(RCF)
     if 0.015<=RCF<=42.32:
+        colA, colB, colC = st.columns(3)
+        with colB:
+            st.image(Image.open('good.png'))
         st.markdown(
             f'<p style="font-size: 30px;text-align:center ">good</p>',
             unsafe_allow_html=True
         )
 
     elif 0.018<RCF<0.015 or 42.32<RCF<347.96:
+        colA, colB, colC = st.columns(3)
+        with colB:
+            st.image(Image.open('moderate.png'))
         st.markdown(
             f'<p style="font-size: 30px;text-align: center">moderate</p>',
             unsafe_allow_html=True
         )
     else:
+        colA, colB, colC = st.columns(3)
+        with colB:
+            st.image(Image.open('bad.png'))
         st.markdown(
             f'<p style="font-size: 30px;text-align: center">bad</p>',
             unsafe_allow_html=True
