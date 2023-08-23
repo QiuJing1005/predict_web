@@ -4,7 +4,7 @@ import pickle
 import io
 # from rdkit import Chem
 # from rdkit.Chem import Draw
-#from sklearn.ensemble import GradientBoostingRegressor
+#from sklearn.ensemble import GradientBoostingRegresso
 # import xgboost
 # from xgboost import XGBRegressor
 from PIL import Image
