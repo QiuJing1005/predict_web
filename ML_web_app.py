@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import pickle
 import io
-from rdkit import Chem
-from rdkit.Chem import Draw
+# from rdkit import Chem
+# from rdkit.Chem import Draw
 # import xgboost
 # from xgboost import XGBRegressorS
 from PIL import Image
@@ -54,13 +54,13 @@ def show_model1_page():
             st.dataframe(df)
             SMILES = st.text_input('Input SMILES', value='C(=O)(C(C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)O')
 
-        mol = Chem.MolFromSmiles(SMILES)
-        img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
+        # mol = Chem.MolFromSmiles(SMILES)
+        # img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
         #将图像转换为字节流
-        streamlit_image = io.BytesIO()
-        img.save(streamlit_image, format='PNG')
+        # streamlit_image = io.BytesIO()
+        # img.save(streamlit_image, format='PNG')
         #在界面上显示图像
-        st.image(streamlit_image)
+        # st.image(streamlit_image)
         des = df.loc[SMILES]
         SlogP_VSA5 = float(des[2])
         VSA_EState10 = float(des[3])
@@ -174,13 +174,13 @@ def show_model2_page():
             st.dataframe(df)
             SMILES = st.text_input('Input SMILES', value='C(=O)(C(C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)O')
 
-        mol = Chem.MolFromSmiles(SMILES)
-        img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
-        # 将图像转换为字节流
-        streamlit_image = io.BytesIO()
-        img.save(streamlit_image, format='PNG')
-        # 在界面上显示图像
-        st.image(streamlit_image)
+        # mol = Chem.MolFromSmiles(SMILES)
+        # img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
+        # # 将图像转换为字节流
+        # streamlit_image = io.BytesIO()
+        # img.save(streamlit_image, format='PNG')
+        # # 在界面上显示图像
+        # st.image(streamlit_image)
 
         des = df.loc[SMILES]
         HallKierAlpha = float(des[2])
@@ -296,13 +296,13 @@ def show_model3_page():
         st.dataframe(df)
         SMILES = st.text_input('Input SMILES', value='C(=O)(C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)O')
 
-    mol = Chem.MolFromSmiles(SMILES)
-    img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
-    # 将图像转换为字节流
-    streamlit_image = io.BytesIO()
-    img.save(streamlit_image, format='PNG')
-    # 在界面上显示图像
-    st.image(streamlit_image)
+    # mol = Chem.MolFromSmiles(SMILES)
+    # img = Draw.MolToImage(mol, size=(400, 300), dpi=500)
+    # # 将图像转换为字节流
+    # streamlit_image = io.BytesIO()
+    # img.save(streamlit_image, format='PNG')
+    # # 在界面上显示图像
+    # st.image(streamlit_image)
     des = df.loc[SMILES]
 
     TPSA = float(des[2])
