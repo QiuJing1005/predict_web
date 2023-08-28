@@ -17,7 +17,7 @@ def main():
 
     colA, colB,colC = st.columns(3)
     with colA:
-        option = st.radio("Choose a prediction model:", ("Leafy crops model", "Fruit/grain crops model", "Root model"))
+        option = st.radio("Choose a prediction model:", ("Fruit/grain crops model","Leafy crops model", "Root model"))
     if option == "Leafy crops model":
         show_model1_page()
     elif option == "Fruit/grain crops model":
